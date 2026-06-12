@@ -50,25 +50,7 @@ jobs:
           npx --version
           npm ls 2>&1 | head -30
 
-      - name: Debug - show environment
-        run: |
-          node --version
-          npm --version
-          rustc --version
-          cargo --version
-          echo "Runner: $RUNNER_OS"
-          echo "Node: $(node -e 'console.log(process.version)')"
 
-      - name: Build frontend
-        run: |
-          echo "=== npm run build (tsc && vite build) ==="
-          npx tsc --noEmit 2>&1
-          echo "--- tsc done ---"
-          npm run build 2>&1
-          echo "--- build done ---"
-
-      - name: Verify npm run build succeeded
-        run: ls -la dist/ 2>&1 || echo "No dist directory!"
         
       - name: Build Tauri
         uses: tauri-apps/tauri-action@v0
