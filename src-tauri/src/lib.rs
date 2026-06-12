@@ -1,4 +1,5 @@
 use std::sync::Mutex;
+use base64::Engine;
 use tauri::{DragDropEvent, Emitter, Manager, State};
 
 #[derive(Default)]
@@ -160,14 +161,8 @@ pub fn run() {
         .expect("error while building tauri application")
         .run(|app_handle, event| {
             match event {
-                tauri::RunEvent::Reopen { has_visible_windows, .. } => {
-                    if !has_visible_windows {
-                        if let Some(window) = app_handle.get_webview_window("main") {
-                            let _ = window.show();
-                            let _ = window.set_focus();
-                        }
-                    }
-                }
+                // Reopen event not available in current tauri version
+                _ => {}
                 _ => {}
             }
         });
