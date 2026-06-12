@@ -46,14 +46,23 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Debug - show environment
+        run: |
+          node --version
+          npm --version
+          rustc --version
+          cargo --version
+          echo "Runner: $RUNNER_OS"
+          echo "Node: $(node -e 'console.log(process.version)')"
+
+      - name: Build frontend
+        run: npm run build
+
       - name: Build Tauri
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # macOS signing is optional; without it users must right-click → Open
-          # To enable signed builds, add these secrets in repo Settings:
-          # APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_SIGNING_IDENTITY,
-          # APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Light MD ${{ github.ref_name }}'
