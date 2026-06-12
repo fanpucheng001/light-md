@@ -56,10 +56,20 @@ fn get_default_folder() -> String {
 
 #[tauri::command]
 fn open_folder(path: &str) -> Result<(), String> {
-    std::process::Command::new("open")
-        .arg(path)
-        .spawn()
-        .map_err(|e| e.to_string())?;
+    let cmd = if cfg!(target_os = "windows") {
+        std::process::Command::new("cmd")
+            .args(["/c", "start", "", path])
+            .spawn()
+    } else if cfg!(target_os = "macos") {
+        std::process::Command::new("open")
+            .arg(path)
+            .spawn()
+    } else {
+        std::process::Command::new("xdg-open")
+            .arg(path)
+            .spawn()
+    };
+    cmd.map_err(|e| e.to_string())?;
     Ok(())
 }
 
@@ -74,7 +84,7 @@ fn save_image(path: &str, data: Vec<u8>) -> Result<(), String> {
 #[tauri::command]
 fn read_file_binary(path: &str) -> Result<String, String> {
     let data = std::fs::read(path).map_err(|e| e.to_string())?;
-    Ok(base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &data))
+    Ok(base64::engine::general_purpose::STANDARD.encode(&data))
 }
 
 #[tauri::command]
