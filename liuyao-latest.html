@@ -59,19 +59,17 @@ body>*{position:relative;z-index:1}
 .card{border:1px solid var(--brd);border-radius:14px;padding:20px;margin-bottom:18px;background:rgba(255,255,255,.02)}
 .card-hd{font-family:var(--font-serif);font-size:15px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 
-.coin-demo{display:flex;gap:28px;justify-content:center;align-items:center;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
-.coin-demo-item{display:flex;flex-direction:column;align-items:center;gap:6px}
-.coin-demo-item img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.coin-demo-item span{font-size:13px;color:var(--gold-l);font-weight:500}
-.coin-demo-arrow{color:var(--text3);font-size:16px;font-weight:700}
+.coin-demo{display:flex;gap:40px;justify-content:center;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--brd)}
+.coin-demo-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.coin-demo-item img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.coin-demo-item span{font-size:14px;color:var(--gold-l);font-weight:500}
 
-.coin-table{border:1px solid var(--brd);border-radius:10px;overflow:hidden}
-.coin-row{display:grid;grid-template-columns:1fr 90px 90px;align-items:center;gap:8px;padding:8px 14px;font-size:14px}
+.coin-table{border:1px solid var(--brd);border-radius:10px;overflow:hidden;margin-top:4px}
+.coin-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:10px 16px;font-size:14px;text-align:center}
 .coin-row:nth-child(even){background:rgba(255,255,255,.04)}
-.coin-row.header{font-size:12px;color:var(--text3);background:transparent}
-.coin-row .coin-visual{font-family:var(--font-serif);letter-spacing:2px;color:var(--text)}
-.coin-row span{text-align:center}
-.coin-row span:last-child{text-align:right}
+.coin-row.header{font-size:12px;color:var(--text3);background:transparent;border-bottom:1px solid var(--brd);padding:8px 16px}
+.coin-row .coin-visual{font-family:var(--font-serif);letter-spacing:3px;color:var(--gold-l);font-weight:600;font-size:15px}
+.coin-row span:last-child{justify-self:end;text-align:right}
 .coin-note{font-size:13px;color:var(--text3);margin-top:12px;text-align:center;line-height:1.6;background:rgba(201,169,110,.04);border-radius:8px;padding:8px 12px}
 
 .time-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0}
@@ -168,11 +166,12 @@ td{color:var(--text2)}td.gold{color:var(--gold)}td.ji{color:var(--green)}td.xion
   .manual-title{font-size:20px}
   .manual-subtitle{font-size:13px;margin-bottom:16px}
   .card{padding:16px;margin-bottom:14px}
-  .coin-demo{gap:20px}
-  .coin-demo-item img{width:42px;height:42px}
-  .coin-row{grid-template-columns:1fr 70px;font-size:13px;padding:7px 12px}
+  .coin-demo{gap:24px}
+  .coin-demo-item img{width:48px;height:48px}
+  .coin-row{grid-template-columns:1fr 1fr;font-size:13px;padding:8px 12px}
   .coin-row.header{display:none}
   .coin-row span:nth-child(3){display:none}
+  .coin-row span:last-child{justify-self:center}
   .time-bar{gap:6px}
   .time-bar>div input,.time-bar>div select{padding:6px 4px;font-size:12px}
   .yao-list{gap:10px;margin-bottom:14px}
@@ -3863,4 +3862,4 @@ checkShareParam();
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
