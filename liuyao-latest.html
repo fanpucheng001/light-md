@@ -1236,72 +1236,111 @@ body.embedded-in-shell .page-back-btn {
 <!-- 手动排卦页 -->
 <div class="manual-page" id="manualPage">
   <h2 class="manual-title">手动排卦</h2>
-  <p class="manual-subtitle">按照下方铜钱起卦法，为每一爻选择阴阳属性</p>
-
-  <!-- 铜钱起卦法 -->
-  <div class="coin-guide">
+  <p class="manual-subtitle">参考下方铜钱起卦法，为每一爻选择阴阳属性</p>
+  <!-- 三枚铜钱起卦法 -->
+  <div class="coin-guide coin-guide-top">
     <div class="coin-guide-title">🪙 三枚铜钱起卦法（乾隆通宝）</div>
     <div class="coin-guide-content">
       <div class="coin-face-demo">
         <div class="coin-face-item">
-          <div class="coin-face yang-face">阳<br><small>满文面</small></div>
+          <img src="images/coin_back.jpg" alt="满文面" class="coin-img">
           <span class="coin-face-arrow">→</span>
-          <span class="coin-face-tag tag-yang">少阳</span>
+          <span class="coin-face-tag tag-yang">阳</span>
         </div>
         <div class="coin-face-item">
-          <div class="coin-face yin-face">阴<br><small>汉字面</small></div>
+          <img src="images/coin_front.jpg" alt="汉字面" class="coin-img">
           <span class="coin-face-arrow">→</span>
-          <span class="coin-face-tag tag-yin">少阴</span>
+          <span class="coin-face-tag tag-yin">阴</span>
         </div>
       </div>
       <div class="coin-guide-table">
-        <div class="coin-guide-row header"><span>三钱组合</span><span>满文面</span><span>汉字面</span><span>对应爻象</span></div>
-        <div class="coin-guide-row">
-          <span class="coin-visual">🪙🪙🪙 三满文</span><span class="tag-yang">3个</span><span>0个</span><span class="tag-old">老阳 ▬▬○</span>
+        <div class="coin-guide-row header">
+          <span>三钱组合</span><span>满文面</span><span>汉字面</span><span>对应爻象</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">🪙🪙● 两满一汉</span><span class="tag-yang">2个</span><span class="tag-yin">1个</span><span class="tag-yang">少阳 ▬▬</span>
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满">
+          </span>
+          <span class="tag-yang">3个</span>
+          <span>0个</span>
+          <span class="tag-old">老阳 ▬▬○</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">🪙●● 一满两汉</span><span class="tag-yang">1个</span><span class="tag-yin">2个</span><span class="tag-yin">少阴 ▬ ▬</span>
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span class="tag-yang">2个</span>
+          <span class="tag-yin">1个</span>
+          <span class="tag-yang">少阳 ▬▬</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">●●● 三汉字</span><span>0个</span><span class="tag-yin">3个</span><span class="tag-old">老阴 ▬ ▬×</span>
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span class="tag-yang">1个</span>
+          <span class="tag-yin">2个</span>
+          <span class="tag-yin">少阴 ▬ ▬</span>
+        </div>
+        <div class="coin-guide-row">
+          <span class="coin-visual">
+            <img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span>0个</span>
+          <span class="tag-yin">3个</span>
+          <span class="tag-old">老阴 ▬ ▬×</span>
         </div>
       </div>
-      <p class="coin-guide-note">📌 满文面为阳、汉字面为阴。从初爻到上爻共投六次。</p>
+      <p class="coin-guide-note">📌 满文面为阳、汉字面为阴。三正=老阳(变)、两正一背=少阳、一正两背=少阴、三背=老阴(变)。从初爻到上爻共投六次。</p>
     </div>
   </div>
+
 
   <!-- 起卦时间 -->
   <div class="time-section">
     <div class="time-title">📅 起卦时间</div>
     <div class="time-inputs">
-      <div class="time-field"><label>年</label><input type="number" id="timeYear" min="1900" max="2100" placeholder="2026"></div>
-      <div class="time-field"><label>月</label><input type="number" id="timeMonth" min="1" max="12" placeholder="6"></div>
-      <div class="time-field"><label>日</label><input type="number" id="timeDay" min="1" max="31" placeholder="14"></div>
-      <div class="time-field"><label>时</label>
+      <div class="time-field">
+        <label>年</label>
+        <input type="number" id="timeYear" min="1900" max="2100" placeholder="2026">
+      </div>
+      <div class="time-field">
+        <label>月</label>
+        <input type="number" id="timeMonth" min="1" max="12" placeholder="1">
+      </div>
+      <div class="time-field">
+        <label>日</label>
+        <input type="number" id="timeDay" min="1" max="31" placeholder="1">
+      </div>
+      <div class="time-field">
+        <label>时</label>
         <select id="timeHour">
-          <option value="23">子 23-1</option><option value="1">丑 1-3</option><option value="3">寅 3-5</option>
-          <option value="5">卯 5-7</option><option value="7">辰 7-9</option><option value="9">巳 9-11</option>
-          <option value="11" selected>午 11-13</option><option value="13">未 13-15</option><option value="15">申 15-17</option>
-          <option value="17">酉 17-19</option><option value="19">戌 19-21</option><option value="21">亥 21-23</option>
+          <option value="0">子时 (23-1)</option>
+          <option value="1">丑时 (1-3)</option>
+          <option value="2">寅时 (3-5)</option>
+          <option value="3">卯时 (5-7)</option>
+          <option value="4">辰时 (7-9)</option>
+          <option value="5">巳时 (9-11)</option>
+          <option value="6">午时 (11-13)</option>
+          <option value="7">未时 (13-15)</option>
+          <option value="8">申时 (15-17)</option>
+          <option value="9">酉时 (17-19)</option>
+          <option value="10">戌时 (19-21)</option>
+          <option value="11">亥时 (21-23)</option>
         </select>
       </div>
     </div>
-    <div class="time-note">⏱ 以实际起卦时间为准</div>
+    <div class="time-note">不填则默认使用当前时间</div>
   </div>
 
-  <!-- 6爻选择 -->
   <div class="manual-yao-list" id="manualYaoList"></div>
-
-  <!-- 按钮 -->
   <div class="manual-actions">
-    <button class="start-btn back-btn" onclick="goManualBack()">← 返回</button>
-    <button class="start-btn" onclick="submitManualYao()">🔮 开始解卦</button>
+    <button class="start-btn back-btn" onclick="goBackHome()">返回</button>
+    <button class="start-btn" onclick="submitManualYao()">确认排盘</button>
   </div>
-  <p class="manual-hint">💡 从初爻（第一次投掷）开始，逐爻向上到上爻（第六次投掷）</p>
-</div><!-- 起卦动画页 -->
+  <p class="manual-hint">💡 少阳（阳爻不变）、少阴（阴爻不变）、老阳（阳爻变）、老阴（阴爻变）<br>老阳和老阴为动爻，会产生变卦</p>
+</div>
+
+<!-- 起卦动画页 -->
 <div class="toss-page" id="tossPage">
   <h2 class="toss-title">正在起卦...</h2>
   <div class="coins-container" id="coinsContainer">
