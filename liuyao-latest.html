@@ -5,196 +5,1156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>六爻在线排盘 - 易经智慧</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0f;--gold:#c9a96e;--gold-l:#e8d5b0;--gold-d:#8a7a5a;--red:#c45c4a;--green:#5a8f6a;--text:#f5efe5;--text2:#b8afa2;--text3:#6a6058;--brd:rgba(201,169,110,0.15);--brd2:rgba(201,169,110,0.25);--font-serif:"Noto Serif SC","STSong","SimSun",serif;--font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-body{font-family:var(--font-sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
-a{color:inherit;text-decoration:none}::selection{background:rgba(201,169,110,.3)}
+/* ===== 基础样式 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: rgba(255,255,255,0.03);
+  --bg-card: rgba(255,255,255,0.06);
+  --text-primary: #f5efe5;
+  --text-secondary: #b8afa2;
+  --text-weak: #766f66;
+  --gold: #c9a96e;
+  --gold-light: #e8d5b0;
+  --gold-dark: #8a7a5a;
+  --red: #c45c4a;
+  --red-light: #d47a6a;
+  --green: #5a8f6a;
+  --border-color: rgba(201,169,110,0.15);
+  --border-color-strong: rgba(201,169,110,0.25);
+  --font-serif: "Noto Serif SC","STSong","SimSun",serif;
+  --font-sans: 'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',system-ui,sans-serif;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+/* 全局背景纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(201,169,110,0.02) 1px, transparent 1px),
+    linear-gradient(rgba(201,169,110,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+body > * { position: relative; z-index: 1; }
+/* 全局滚动条 */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(201,169,110,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201,169,110,0.4); }
 
-body::before{content:'';position:fixed;inset:0;background:linear-gradient(90deg,rgba(201,169,110,.015) 1px,transparent 1px),linear-gradient(rgba(201,169,110,.015) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
-body>*{position:relative;z-index:1}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px}
-
-/* ===== 通用 ===== */
-.page-back-btn{position:fixed;top:12px;left:12px;z-index:9999;height:32px;padding:0 12px;border:1px solid var(--brd);border-radius:999px;background:rgba(10,10,15,.85);color:var(--gold-l);font-size:12px;cursor:pointer;backdrop-filter:blur(12px);transition:all .25s}
-.page-back-btn:hover{background:rgba(201,169,110,.1);border-color:var(--gold)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 28px;border-radius:999px;font-size:14px;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;transition:all .3s;font-family:var(--font-sans)}
-.btn-p{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#1b1308;box-shadow:0 4px 20px rgba(201,169,110,.2)}
-.btn-p:hover{box-shadow:0 6px 30px rgba(201,169,110,.35);transform:translateY(-2px)}
-.btn-r{background:linear-gradient(135deg,var(--red),#d47a6a);color:#fff;box-shadow:0 4px 20px rgba(196,92,74,.35);width:100%;padding:14px}
-.btn-r:hover{box-shadow:0 6px 30px rgba(196,92,74,.45);transform:translateY(-2px)}
-.btn-s{border:1px solid var(--brd);color:var(--gold-l);background:rgba(255,255,255,.03)}
-.btn-s:hover{border-color:var(--brd2);background:rgba(201,169,110,.08)}
-.tag-yang{color:var(--gold);font-weight:600}
-.tag-yin{color:var(--green);font-weight:600}
-.tag-old{color:var(--red);font-weight:600}
+/* ===== 返回按钮 ===== */
+.page-back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 9999;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--border-color-strong);
+  border-radius: 999px;
+  background: rgba(10,10,15,0.8);
+  color: var(--gold-light);
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
+}
+.page-back-btn:hover {
+  background: rgba(201,169,110,0.12);
+  border-color: var(--gold);
+  transform: translateX(-2px);
+}
+body.embedded-in-shell .page-back-btn {
+  display: inline-block;
+}
 
 /* ===== 首页 ===== */
-.home-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 16px}
-.home-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,169,110,.06),transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(201,169,110,.03),transparent 40%);pointer-events:none}
-.title{font-family:var(--font-serif);font-size:clamp(32px,7vw,48px);color:var(--gold);text-align:center;margin-bottom:8px;text-shadow:0 2px 30px rgba(201,169,110,.2);letter-spacing:.1em;font-weight:700}
-.subtitle{font-family:var(--font-serif);font-size:clamp(13px,2.5vw,16px);color:var(--gold-d);text-align:center;margin-bottom:28px;letter-spacing:.25em}
-.input-section{width:100%;max-width:440px;margin:0 auto}
-.question-label{display:block;margin-bottom:8px;color:var(--gold);font-size:13px;font-family:var(--font-serif)}
-.question-input{width:100%;padding:12px 16px;font-size:14px;background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:10px;color:var(--text);outline:none;transition:all .3s;margin-bottom:16px}
-.question-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.08)}
-.question-input::placeholder{color:var(--text3)}
-.btn-group{display:flex;gap:10px}
-.btn-group .btn{flex:1;justify-content:center}
-.qigua-notice{width:100%;max-width:440px;margin:24px auto 0}
-.notice-header{display:flex;align-items:center;gap:6px;padding:10px 14px;border:1px solid var(--brd);border-radius:10px;cursor:pointer;transition:all .25s;background:rgba(255,255,255,.02)}
-.notice-header:hover{border-color:var(--gold-d)}
-.notice-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.notice-body.show{max-height:2000px}
-.notice-section{padding:14px;border:1px solid var(--brd);border-top:none;background:rgba(255,255,255,.02)}
-.notice-list{padding-left:16px}
-.notice-list li{font-size:12px;color:var(--text2);line-height:1.8;margin-bottom:4px}
-.notice-list li strong{color:var(--text)}
+.home-page {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 100vh;
+  padding: 20px; position: relative;
+  background: linear-gradient(160deg, #0a0a0f 0%, #050506 50%, #0a0a0f 100%);
+}
+.home-page::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(201,169,110,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.03) 0%, transparent 40%);
+  pointer-events: none;
+}
+.home-page::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(201,169,110,0.015) 1px, transparent 1px),
+    linear-gradient(rgba(201,169,110,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+.title {
+  font-family: var(--font-serif);
+  font-size: 3rem; color: var(--gold); text-align: center;
+  margin-bottom: 10px; text-shadow: 0 2px 30px rgba(201,169,110,0.2);
+  position: relative; z-index: 1;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.1rem; color: var(--gold-dark); text-align: center;
+  margin-bottom: 40px; position: relative; z-index: 1;
+  letter-spacing: 0.3em;
+}
+.input-section {
+  width: 100%; max-width: 500px; position: relative; z-index: 1;
+}
+.question-label {
+  display: block; margin-bottom: 10px; color: var(--gold); font-size: 1rem;
+  font-family: var(--font-serif);
+  letter-spacing: 0.05em;
+}
+.question-input {
+  width: 100%; padding: 15px 20px; font-size: 1rem;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border-color);
+  border-radius: 10px; color: var(--text-primary); outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s; margin-bottom: 20px;
+  font-family: var(--font-sans);
+}
+.question-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
+}
+.question-input::placeholder { color: var(--text-weak); }
+.start-btn {
+  width: 100%; padding: 16px; font-size: 1.2rem; color: #fff;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+  border: none; border-radius: 10px; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(196,92,74,0.35);
+  font-family: var(--font-sans);
+  letter-spacing: 0.05em;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(196,92,74,0.45); }
+.start-btn:active { transform: translateY(0); }
+.btn-group {
+  display: flex; gap: 12px; margin-bottom: 0;
+}
+.btn-group .start-btn { flex: 1; font-size: 1rem; padding: 14px 10px; }
+.btn-group .start-btn.secondary-btn {
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201,169,110,0.15);
+}
+.btn-group .start-btn.secondary-btn:hover {
+  background: rgba(201,169,110,0.1);
+  box-shadow: 0 6px 30px rgba(201,169,110,0.25);
+  border-color: var(--gold-light);
+}
 
-/* ===== 手动排卦 ===== */
-.manual-page{display:none;min-height:100vh;padding:32px 16px;max-width:520px;margin:0 auto}
-.manual-title{font-family:var(--font-serif);font-size:clamp(20px,4vw,26px);color:var(--gold);text-align:center;margin-bottom:6px;letter-spacing:.08em}
-.manual-subtitle{text-align:center;font-size:14px;color:var(--text3);margin-bottom:20px}
+/* ===== 手动排卦页 ===== */
+.manual-page {
+  display: none; flex-direction: column; align-items: center;
+  min-height: 100vh; padding: 40px 20px;
+  background: linear-gradient(160deg, #0a0a0f 0%, #050506 50%, #0a0a0f 100%);
+}
+.manual-page::before {
+  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 20%, rgba(201,169,110,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.manual-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem; color: var(--gold); margin-bottom: 10px;
+  letter-spacing: 0.12em; text-align: center;
+}
+.manual-subtitle {
+  font-size: 0.85rem; color: var(--text-weak); margin-bottom: 24px;
+  text-align: center;
+}
 
-.card{border:1px solid var(--brd);border-radius:14px;padding:20px;margin-bottom:18px;background:rgba(255,255,255,.02)}
-.card-hd{font-family:var(--font-serif);font-size:15px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+/* 起卦时间 */
+.time-section {
+  width: 100%; max-width: 520px;
+  background: rgba(255,255,255,0.03); border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 18px 20px; margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+.time-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem; color: var(--gold); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 6px;
+}
+.time-inputs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.time-field {
+  min-width: 0;
+}
+.time-field label {
+  display: block; font-size: 0.75rem; color: var(--text-weak);
+  margin-bottom: 4px;
+}
+.time-field input,
+.time-field select {
+  width: 100%; padding: 10px 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border-color);
+  border-radius: 8px; color: var(--text-primary); font-size: 0.9rem;
+  outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.time-field input:focus,
+.time-field select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201,169,110,0.08);
+}
+.time-field input::placeholder {
+  color: var(--text-weak);
+}
+.time-note {
+  font-size: 0.75rem; color: var(--text-weak);
+  margin-top: 12px; text-align: center;
+}
 
-.coin-demo{display:flex;gap:40px;justify-content:center;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--brd)}
-.coin-demo-item{display:flex;flex-direction:column;align-items:center;gap:8px}
-.coin-demo-item img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.coin-demo-item span{font-size:14px;color:var(--gold-l);font-weight:500}
-.coin-face-label{font-size:14px;color:var(--gold-l);font-weight:500;text-align:center}
-.coin-img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.manual-yao-list {
+  width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 24px;
+}
+.manual-yao-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 50px;
+  align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03); border-radius: 10px; padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.3s, background 0.3s;
+}
+.manual-yao-row:hover { border-color: var(--gold); background: rgba(255,255,255,0.05); }
+.yao-label {
+  font-family: var(--font-serif);
+  font-size: 0.9rem; color: var(--gold); font-weight: bold;
+  text-align: right;
+}
+.yao-options {
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+}
+.yao-opt {
+  padding: 6px 12px; font-size: 0.8rem; border: 1px solid var(--border-color);
+  border-radius: 6px; background: rgba(255,255,255,0.04); color: var(--text-secondary);
+  cursor: pointer; transition: all 0.2s; user-select: none;
+  white-space: nowrap;
+}
+.yao-opt:hover { border-color: var(--gold); color: var(--text-primary); }
+.yao-opt.active-yang {
+  background: rgba(201,169,110,0.2); border-color: var(--gold); color: var(--gold);
+}
+.yao-opt.active-yin {
+  background: rgba(90,143,106,0.15); border-color: var(--green); color: var(--green);
+}
+.yao-opt.active-old {
+  background: rgba(196,92,74,0.2); border-color: var(--red); color: var(--red);
+}
+.yao-preview {
+  width: 50px; height: 5px; border-radius: 3px; background: var(--bg-card);
+  transition: all 0.3s; justify-self: center;
+}
+.yao-preview.yang { background: var(--gold); }
+.yao-preview.yin {
+  background: linear-gradient(to right, var(--gold) 0%, var(--gold) 42%, transparent 42%, transparent 58%, var(--gold) 58%, var(--gold) 100%);
+}
+.yao-preview.old { box-shadow: 0 0 8px var(--red), 0 0 16px rgba(196,92,74,0.2); }
+.manual-actions {
+  display: flex; gap: 12px; width: 100%; max-width: 520px;
+}
+.manual-actions .start-btn { flex: 1; font-size: 1rem; padding: 14px; }
+.manual-actions .start-btn.back-btn {
+  background: rgba(255,255,255,0.04); color: var(--gold);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+.manual-actions .start-btn.back-btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--border-color-strong);
+}
+.manual-hint {
+  font-size: 0.8rem; color: var(--text-weak); margin-top: 16px;
+  text-align: center; max-width: 520px; line-height: 1.8;
+}
+.coin-guide {
+  width: 100%; max-width: 520px; margin-top: 24px;
+  background: rgba(255,255,255,0.03); border-radius: 12px;
+  border: 1px solid var(--border-color); padding: 18px;
+  backdrop-filter: blur(8px);
+}
+.coin-guide-title {
+  font-family: var(--font-serif);
+  font-size: 1rem; color: var(--gold); margin-bottom: 12px; font-weight: bold;
+}
+.coin-guide-content p {
+  font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;
+}
+.coin-guide-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.coin-guide-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  font-size: 0.85rem;
+}
+.coin-guide-row:nth-child(even) {
+  background: rgba(255,255,255,0.06);
+}
+.coin-guide-row.header {
+  background: transparent;
+  font-size: 0.75rem;
+  color: var(--text-weak);
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+.coin-guide-row.header span { color: var(--text-weak); }
+.coin-guide-row span { text-align: center; color: var(--text-primary); }
+.coin-guide-row .coin-visual {
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+.tag-yang {
+  background: rgba(201,169,110,0.12); color: var(--gold);
+  padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;
+}
+.tag-yin {
+  background: rgba(90,143,106,0.12); color: var(--green);
+  padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;
+}
+.tag-old {
+  background: rgba(196,92,74,0.12); color: var(--red);
+  padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;
+}
+.coin-guide-note {
+  font-size: 0.8rem; color: var(--text-weak); margin-top: 12px;
+  margin-bottom: 0; line-height: 1.6;
+}
+.coin-face-demo {
+  display: flex; gap: 20px; justify-content: center; margin-bottom: 15px;
+  padding-bottom: 15px; border-bottom: 1px solid var(--border-color);
+}
+.coin-face-item {
+  display: flex; align-items: center; gap: 8px;
+}
+.coin-face {
+  width: 60px; height: 60px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: bold; line-height: 1.3;
+  border: 2px solid; box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 15px rgba(201,169,110,0.1);
+}
+.coin-face small { font-size: 0.6rem; font-weight: normal; opacity: 0.7; }
+.coin-face.yang-face {
+  background: linear-gradient(135deg, #c9a96e 0%, #8a7a5a 100%);
+  color: #0a0a0f; border-color: var(--gold);
+}
+.coin-face.yin-face {
+  background: linear-gradient(135deg, #5a8f6a 0%, #3d6b4f 100%);
+  color: #f5efe5; border-color: var(--green);
+}
+.coin-face-arrow { color: var(--text-weak); font-size: 1rem; }
+.coin-face-tag { font-size: 0.8rem; font-weight: bold; padding: 2px 8px; border-radius: 4px; }
+.coin-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  font-size: 0.65rem; font-weight: bold; margin: 0 2px;
+  border: 1.5px solid; box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 8px rgba(201,169,110,0.08);
+}
+.coin-icon.yang {
+  background: linear-gradient(135deg, #c9a96e 0%, #8a7a5a 100%);
+  color: #0a0a0f; border-color: var(--gold);
+}
+.coin-icon.yin {
+  background: linear-gradient(135deg, #5a8f6a 0%, #3d6b4f 100%);
+  color: #f5efe5; border-color: var(--green);
+}
+.coin-img {
+  width: 50px; height: 50px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--gold);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 15px rgba(201,169,110,0.15);
+}
+.coin-icon-img {
+  width: 22px; height: 22px; border-radius: 50%;
+  object-fit: cover; margin: 0 2px;
+  border: 1.5px solid var(--gold); box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 8px rgba(201,169,110,0.1);
+  vertical-align: middle;
+}
+.coin-guide-top { margin-bottom: 18px; }
+@media (max-width: 480px) {
+  .coin-guide-top { margin-bottom: 4px; }
+  .coin-guide-top .coin-guide-note { display: none; }
+}
 
-.coin-table{border:1px solid var(--brd);border-radius:10px;overflow:hidden;margin-top:4px}
-.coin-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:10px 16px;font-size:14px;text-align:center}
-.coin-row:nth-child(even){background:rgba(255,255,255,.04)}
-.coin-row.header{font-size:12px;color:var(--text3);background:transparent;border-bottom:1px solid var(--brd);padding:8px 16px}
-.coin-row .coin-visual{font-family:var(--font-serif);letter-spacing:3px;color:var(--gold-l);font-weight:600;font-size:15px}
-.coin-row span:last-child{justify-self:end;text-align:right}
-.coin-note{font-size:13px;color:var(--text3);margin-top:12px;text-align:center;line-height:1.6;background:rgba(201,169,110,.04);border-radius:8px;padding:8px 12px}
+/* ===== 手动排卦页移动端适配 (max-width: 480px) ===== */
+@media (max-width: 480px) {
+  .manual-page { padding: 10px 6px; min-height: 100dvh; }
+  .manual-title { font-size: 1.1rem; margin-bottom: 2px; letter-spacing: 0.05em; }
+  .manual-subtitle { font-size: 0.65rem; margin-bottom: 6px; }
 
-.time-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0}
-.time-bar>div label{display:block;font-size:11px;color:var(--text3);margin-bottom:4px}
-.time-bar>div input,.time-bar>div select{width:100%;padding:8px 10px;background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:8px;color:var(--text);font-size:13px;outline:none}
-.time-bar>div input:focus,.time-bar>div select:focus{border-color:var(--gold)}
-.time-note{font-size:11px;color:var(--text3);margin-top:8px;text-align:center}
+  /* 铜钱起卦法 - 横向紧凑卡片 */
+  .coin-guide-top { margin-bottom: 4px; }
+  .coin-guide { padding: 6px 8px; margin-top: 0; margin-bottom: 4px; border-radius: 8px; }
+  .coin-guide-title { font-size: 0.7rem; margin-bottom: 3px; }
+  .coin-face-demo { display: none; }
+  .coin-guide-table { gap: 1px; }
+  .coin-guide-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+  }
+  .coin-guide-row.header { display: none; }
+  .coin-guide-row .coin-visual {
+    order: 0;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+  .coin-guide-row span:nth-child(2) { display: none; }
+  .coin-guide-row span:nth-child(3) { display: none; }
+  .coin-guide-row span:nth-child(4) {
+    order: 1;
+    text-align: right;
+    font-size: 0.65rem;
+  }
+  .coin-icon-img { width: 14px; height: 14px; margin: 0 1px; }
+  .coin-guide-note { display: none; }
+  .coin-guide-content p { display: none; }
 
-.yao-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.yao-row{display:grid;grid-template-columns:52px 1fr 42px;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--brd);border-radius:10px;background:rgba(255,255,255,.02)}
-.yao-row:hover{border-color:var(--gold)}
-.yao-label{font-family:var(--font-serif);font-size:14px;color:var(--gold);font-weight:700;text-align:right}
-.yao-opts{display:flex;gap:4px;justify-content:center}
-.yao-opt{padding:5px 10px;font-size:12px;border:1px solid var(--brd);border-radius:6px;background:rgba(255,255,255,.04);color:var(--text2);cursor:pointer;transition:all .2s;user-select:none}
-.yao-opt:hover{border-color:var(--gold);color:var(--text)}
-.yao-opt.active-yang{background:rgba(201,169,110,.2);border-color:var(--gold);color:var(--gold)}
-.yao-opt.active-yin{background:rgba(90,143,106,.15);border-color:var(--green);color:var(--green)}
-.yao-opt.active-old{background:rgba(196,92,74,.2);border-color:var(--red);color:var(--red)}
-.yao-preview{width:42px;height:5px;border-radius:2px;justify-self:center;transition:all .3s}
-.yao-preview.yang{background:var(--gold)}
-.yao-preview.yin{background:linear-gradient(to right,var(--gold) 0%,var(--gold) 40%,transparent 40%,transparent 60%,var(--gold) 60%,var(--gold) 100%)}
-.yao-preview.old{box-shadow:0 0 8px var(--red)}
-.manual-acts{display:flex;gap:10px}
-.manual-acts button{flex:1;padding:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:14px;letter-spacing:1px;transition:all .2s}
-.manual-acts .btn-primary{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#1b1308;box-shadow:0 4px 20px rgba(201,169,110,.2)}
-.manual-acts .btn-primary:hover{box-shadow:0 6px 30px rgba(201,169,110,.35);transform:translateY(-2px)}
-.manual-acts .btn-second{border:1px solid var(--brd);color:var(--gold-l);background:rgba(255,255,255,.03)}
-.manual-acts .btn-second:hover{border-color:var(--brd2);background:rgba(201,169,110,.08)}
-.manual-hint{font-size:13px;color:var(--text3);text-align:center;margin-top:14px;line-height:1.7}
+  /* 时间输入 - 一行紧凑 */
+  .time-section { padding: 5px 8px; margin-bottom: 4px; border-radius: 8px; }
+  .time-title { display: none; }
+  .time-inputs { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .time-field label { font-size: 0.6rem; margin-bottom: 1px; }
+  .time-field input, .time-field select { padding: 3px 2px; font-size: 0.7rem; border-radius: 4px; }
+  .time-note { display: none; }
 
-/* ===== 摇卦动画 ===== */
-.toss-page{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px}
-.toss-title{font-family:var(--font-serif);font-size:clamp(18px,3.5vw,24px);color:var(--gold);margin-bottom:28px;letter-spacing:.08em}
-.coins-container{display:flex;gap:24px;margin-bottom:32px}
-.coin{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-d));display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--bg);font-weight:700;box-shadow:0 4px 15px rgba(201,169,110,.4);animation:coinFlip .5s ease-in-out}
-@keyframes coinFlip{0%{transform:rotateY(0)scale(1)}50%{transform:rotateY(180deg)scale(1.2)}100%{transform:rotateY(360deg)scale(1)}}
-.yao-result{display:flex;flex-direction:column;gap:6px;align-items:center}
-.yao-result .yao-line{width:100px;height:5px;background:rgba(255,255,255,.06);border-radius:3px;transition:all .5s;opacity:0}
-.yao-result .yao-line.show{opacity:1}
-.yao-result .yao-line.yang{background:var(--gold)}
-.yao-result .yao-line.yin{background:linear-gradient(to right,var(--gold) 0%,var(--gold) 45%,transparent 45%,transparent 55%,var(--gold) 55%,var(--gold) 100%)}
-.yao-result .yao-line.old{box-shadow:0 0 10px var(--red)}
-.toss-status{margin-top:16px;color:var(--gold-d);font-size:13px}
+  /* 爻位选择 - 极紧凑横向 */
+  .manual-yao-list { gap: 2px; margin-bottom: 6px; }
+  .manual-yao-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 36px;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+  .yao-label { text-align: right; font-size: 0.68rem; }
+  .yao-options { gap: 2px; }
+  .yao-opt { padding: 2px 6px; font-size: 0.6rem; border-radius: 3px; }
+  .yao-preview { width: 32px; height: 3px; justify-self: center; border-radius: 2px; }
 
-/* ===== 结果 ===== */
-.result-page{display:none;min-height:100vh;padding:24px 16px 40px;max-width:640px;margin:0 auto}
-.result-header{text-align:center;padding:16px 0;border-bottom:1px solid var(--brd);margin-bottom:20px}
-.result-header h2{font-family:var(--font-serif);font-size:clamp(20px,4vw,28px);color:var(--gold);margin-bottom:4px;letter-spacing:.08em}
-.result-header .question-text{color:var(--text3);font-size:13px}
-.result-main{display:flex;flex-direction:column;gap:16px}
-.gua-visual{padding:20px;border:1px solid var(--brd);border-radius:12px;background:rgba(255,255,255,.02);text-align:center}
-.gua-name{font-family:var(--font-serif);font-size:clamp(18px,3vw,24px);color:var(--gold);margin-bottom:4px;letter-spacing:.08em}
-.gua-palace{font-size:12px;color:var(--text3);margin-bottom:16px}
-.yao-container{display:flex;flex-direction:column;gap:8px;align-items:center;margin-bottom:16px}
-.yao-container .yao-row{display:flex;align-items:center;gap:10px;justify-content:center}
-.yao-mark{font-size:11px;color:var(--text3);width:16px;flex-shrink:0;text-align:center}
-.yao-mark.shi-ying{color:var(--gold);font-weight:700}
-.yao-graphic{width:100px;height:6px;border-radius:3px;flex-shrink:0}
-.yao-graphic.yang{background:var(--gold)}
-.yao-graphic.yin{display:flex;gap:12px;justify-content:center}
-.yao-graphic.yin::before,.yao-graphic.yin::after{content:'';width:38px;height:6px;background:var(--gold);border-radius:3px}
-.yao-graphic.old-yang{background:var(--gold);box-shadow:0 0 12px var(--red)}
-.yao-graphic.old-yin{box-shadow:0 0 12px var(--red)}
-.yao-graphic.old-yin::before,.yao-graphic.old-yin::after{width:38px;height:6px;background:var(--gold);border-radius:3px;box-shadow:0 0 12px var(--red)}
-.tab-bar{display:flex;gap:6px;margin-bottom:16px}
-.tab{flex:1;padding:8px;text-align:center;font-size:12px;border:1px solid var(--brd);border-radius:8px;cursor:pointer;transition:all .25s;color:var(--text3)}
-.tab:hover{border-color:var(--brd2);color:var(--text2)}
-.tab.active{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,.08)}
-.tab-content{display:none}
-.tab-content.active{display:block}
-.detail-card{border:1px solid var(--brd);border-radius:12px;padding:16px;margin-bottom:12px;background:rgba(255,255,255,.02)}
-.detail-card h3{font-family:var(--font-serif);font-size:14px;color:var(--gold);margin-bottom:10px}
-.detail-card p,.detail-card li{font-size:13px;color:var(--text2);line-height:1.8}
-.detail-card ol,.detail-card ul{padding-left:20px}
-.tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600}
-.tag.ji{background:rgba(90,143,106,.15);color:var(--green)}
-.tag.xiong{background:rgba(196,92,74,.15);color:var(--red)}
-.tag.ping{background:rgba(201,169,110,.15);color:var(--gold)}
-table{width:100%;border-collapse:collapse;margin:8px 0}
-th,td{padding:6px;font-size:12px;text-align:center;border-bottom:1px solid var(--brd)}
-th{color:var(--gold-d);font-weight:400}
-td{color:var(--text2)}td.gold{color:var(--gold)}td.ji{color:var(--green)}td.xiong{color:var(--red)}
-.result-actions{display:flex;gap:10px;margin-top:16px}
-.result-actions a,.result-actions button{flex:1;justify-content:center;font-size:13px;padding:10px 16px;text-align:center;border-radius:999px;cursor:pointer;transition:all .25s;font-weight:700}
-.result-actions .btn-p{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#1b1308;border:none}
-.result-actions .btn-p:hover{box-shadow:0 6px 25px rgba(201,169,110,.35)}
-.result-actions .btn-s{border:1px solid var(--brd);color:var(--gold-l);background:rgba(255,255,255,.03)}
-.result-actions .btn-s:hover{border-color:var(--brd2)}
+  /* 操作按钮 */
+  .manual-actions { flex-direction: row; gap: 6px; margin-top: 4px; }
+  .manual-actions .start-btn { padding: 8px 6px; font-size: 0.78rem; border-radius: 6px; }
 
-/* ===== Mobile ===== */
-@media(max-width:480px){
-  .home-page{padding:24px 12px}
-  .manual-page{padding:20px 12px}
-  .manual-title{font-size:20px}
-  .manual-subtitle{font-size:13px;margin-bottom:16px}
-  .card{padding:16px;margin-bottom:14px}
-  .coin-demo{gap:24px}
-  .coin-demo-item img{width:48px;height:48px}
-  .coin-row{grid-template-columns:1fr 1fr;font-size:13px;padding:8px 12px}
-  .coin-row.header{display:none}
-  .coin-row span:nth-child(3){display:none}
-  .coin-row span:last-child{justify-self:center}
-  .time-bar{gap:6px}
-  .time-bar>div input,.time-bar>div select{padding:6px 4px;font-size:12px}
-  .yao-list{gap:10px;margin-bottom:14px}
-  .yao-row{grid-template-columns:1fr;gap:6px;padding:10px 12px}
-  .yao-label{text-align:center;font-size:14px;margin-bottom:2px}
-  .yao-opts{gap:6px;flex-wrap:wrap;justify-content:center}
-  .yao-opt{padding:6px 10px;font-size:12px}
-  .yao-preview{width:100%;height:5px;margin-top:4px}
-  .manual-acts{gap:8px}
-  .manual-acts button{font-size:13px;padding:10px;border-radius:8px}
-  .manual-hint{font-size:12px;margin-top:10px}
-  .time-note{display:none}
-  .result-page{padding:14px 8px 32px}
-  .result-header h2{font-size:18px}
-  .gua-visual{padding:14px}
-  .yao-graphic{width:72px;height:5px}
-  .yao-graphic.yin::before,.yao-graphic.yin::after{width:26px;height:5px}
-  .tab{font-size:10px;padding:6px 4px}
-  .detail-card{padding:12px}
-  th,td{font-size:11px;padding:4px}
-  .result-actions{flex-direction:column;gap:6px}
+  /* 提示文字 */
+  .manual-hint { font-size: 0.6rem; line-height: 1.3; margin-top: 4px; }
+}
+
+
+/* ===== 起卦动画页 ===== */
+.toss-page {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 100vh; padding: 20px;
+  background: linear-gradient(160deg, #0a0a0f 0%, #050506 50%, #0a0a0f 100%);
+}
+.toss-page::before {
+  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(201,169,110,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.toss-title { font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold); margin-bottom: 30px; letter-spacing: 0.1em; }
+.coins-container {
+  display: flex; gap: 30px; margin-bottom: 40px;
+}
+.coin {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--bg-primary); font-weight: bold;
+  box-shadow: 0 4px 15px rgba(201,169,110,0.4), 0 0 30px rgba(201,169,110,0.15);
+  animation: coinFlip 0.5s ease-in-out;
+}
+@keyframes coinFlip {
+  0% { transform: rotateY(0deg) scale(1); }
+  50% { transform: rotateY(180deg) scale(1.2); }
+  100% { transform: rotateY(360deg) scale(1); }
+}
+.yao-result {
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+}
+.yao-line {
+  width: 120px; height: 6px; background: var(--bg-card);
+  border-radius: 3px; transition: all 0.5s; opacity: 0;
+}
+.yao-line.show { opacity: 1; }
+.yao-line.yang { background: var(--gold); }
+.yao-line.yin {
+  background: linear-gradient(to right, var(--gold) 0%, var(--gold) 45%, transparent 45%, transparent 55%, var(--gold) 55%, var(--gold) 100%);
+}
+.yao-line.old { box-shadow: 0 0 10px var(--red), 0 0 20px rgba(196,92,74,0.2); }
+.toss-status { margin-top: 20px; color: var(--gold-dark); font-size: 0.9rem; letter-spacing: 0.05em; }
+
+/* ===== 排盘结果页 ===== */
+.result-page {
+  display: none; min-height: 100vh; padding: 20px;
+  background: linear-gradient(160deg, #0a0a0f 0%, #050506 50%, #0a0a0f 100%);
+}
+.result-page::before {
+  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 10%, rgba(201,169,110,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.result-header {
+  text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+.result-header h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--gold); margin-bottom: 5px; letter-spacing: 0.1em; }
+.result-header .question-text { color: var(--text-weak); font-size: 0.9rem; }
+.result-main {
+  display: flex; gap: 30px; max-width: 1200px; margin: 0 auto;
+}
+.gua-visual {
+  flex: 0 0 300px; display: flex; flex-direction: column;
+  align-items: center; padding: 20px;
+  background: rgba(255,255,255,0.03); border-radius: 12px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s, background 0.3s;
+}
+.gua-visual:hover {
+  border-color: var(--border-color-strong);
+  background: rgba(255,255,255,0.05);
+}
+.gua-name {
+  font-family: var(--font-serif);
+  font-size: 2rem; color: var(--gold); margin-bottom: 5px;
+  letter-spacing: 0.1em;
+}
+.gua-palace {
+  font-size: 0.9rem; color: var(--text-weak); margin-bottom: 20px;
+}
+.yao-container {
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+  margin-bottom: 20px;
+}
+.yao-row {
+  display: flex; align-items: center; gap: 15px; position: relative;
+}
+.yao-mark {
+  font-size: 0.75rem; color: var(--red); width: 20px; text-align: center;
+}
+.yao-mark.shi-ying { color: var(--gold); font-weight: bold; }
+.yao-mark.bian { color: var(--red); }
+.yao-graphic {
+  width: 120px; height: 8px; position: relative;
+}
+.yao-graphic.yang {
+  background: var(--gold); border-radius: 4px;
+}
+.yao-graphic.yin {
+  display: flex; gap: 15px; justify-content: center;
+}
+.yao-graphic.yin::before,
+.yao-graphic.yin::after {
+  content: ''; width: 45px; height: 8px; background: var(--gold); border-radius: 4px;
+}
+.yao-graphic.old-yang { box-shadow: 0 0 12px var(--red), 0 0 24px rgba(196,92,74,0.2); }
+.yao-graphic.old-yin { box-shadow: 0 0 12px var(--red), 0 0 24px rgba(196,92,74,0.2); }
+.bian-dot {
+  width: 10px; height: 10px; background: var(--red); border-radius: 50%;
+  position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 8px rgba(196,92,74,0.4);
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.bian-gua-info {
+  margin-top: 15px; padding: 12px; background: rgba(196,92,74,0.06);
+  border-radius: 8px; text-align: center;
+  border: 1px solid rgba(196,92,74,0.15);
+}
+.bian-gua-info .label { color: var(--red); font-size: 0.85rem; font-family: var(--font-serif); }
+.bian-gua-info .name { color: var(--gold); font-size: 1.1rem; margin-bottom: 10px; font-family: var(--font-serif); letter-spacing: 0.05em; }
+.bian-yao-container {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; margin: 8px 0;
+}
+.bian-yao-row {
+  display: flex; align-items: center; gap: 6px;
+}
+.bian-yao-graphic {
+  width: 60px; height: 8px; border-radius: 2px;
+  position: relative;
+}
+.bian-yao-graphic.yang {
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+}
+.bian-yao-graphic.yin {
+  background: transparent;
+}
+.bian-yao-graphic.yin::before,
+.bian-yao-graphic.yin::after {
+  content: ''; position: absolute; top: 0; height: 100%;
+  width: 40%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+}
+.bian-yao-graphic.yin::before { left: 0; }
+.bian-yao-graphic.yin::after { right: 0; }
+.bian-gua-ci {
+  font-size: 0.75rem; color: var(--text-secondary);
+  line-height: 1.6; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid rgba(212,165,116,0.15);
+  text-align: left;
+}
+
+.gua-info {
+  flex: 1; padding: 20px;
+  background: rgba(255,255,255,0.03); border-radius: 12px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s, background 0.3s;
+}
+.gua-info:hover {
+  border-color: var(--border-color-strong);
+  background: rgba(255,255,255,0.05);
+}
+.info-section { margin-bottom: 20px; }
+.info-section h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem; color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
+  letter-spacing: 0.05em;
+}
+.gua-ci {
+  font-family: var(--font-serif); color: var(--text-secondary);
+  line-height: 1.8; font-size: 0.95rem; margin-bottom: 15px;
+}
+.najia-table { width: 100%; border-collapse: collapse; }
+.najia-table th,
+.najia-table td {
+  padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+.najia-table th { color: var(--gold); font-weight: normal; }
+.najia-table td { color: var(--text-primary); }
+.najia-table .liu-shen { color: #8fbc8f; }
+.najia-table .liu-qin { color: var(--gold-light); }
+.najia-table .gan-zhi { color: var(--text-primary); }
+.najia-table .wu-xing { color: var(--text-secondary); font-size: 0.8rem; }
+.najia-table .dong { color: var(--red); font-weight: bold; }
+.najia-table tr.bian-row { background: rgba(196,92,74,0.05); }
+.najia-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.najia-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+
+.duan-gua-rule {
+  padding: 15px; background: rgba(201,169,110,0.06); border-radius: 8px;
+  border-left: 3px solid var(--gold); margin-bottom: 20px;
+}
+.duan-gua-rule .label { color: var(--gold); font-size: 0.85rem; margin-bottom: 5px; font-family: var(--font-serif); }
+.duan-gua-rule .content { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; }
+
+/* 解读卡片 */
+.jiedu-section { margin-top: 20px; }
+
+/* ===== 继续提问区域 ===== */
+.follow-up-section {
+  margin-top: 24px; padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+.follow-up-section::before {
+  content: ''; position: absolute; top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent);
+}
+.follow-up-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem; color: var(--gold); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+.follow-up-title .title-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--red-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; flex-shrink: 0;
+}
+.follow-up-title .title-text {
+  font-weight: 600; letter-spacing: 0.5px;
+}
+.follow-up-title .title-hint {
+  font-size: 0.75rem; color: var(--text-weak);
+  font-weight: 400; margin-left: auto;
+}
+.follow-up-history {
+  max-height: 500px; overflow-y: auto; margin-bottom: 16px;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 4px 0;
+  min-height: 0;
+}
+.follow-up-history::-webkit-scrollbar { width: 4px; }
+.follow-up-history::-webkit-scrollbar-track { background: transparent; }
+.follow-up-history::-webkit-scrollbar-thumb { background: rgba(201,169,110,0.2); border-radius: 2px; }
+.follow-up-history::-webkit-scrollbar-thumb:hover { background: rgba(201,169,110,0.35); }
+.follow-up-msg {
+  padding: 14px 18px; border-radius: 16px; font-size: 0.88rem;
+  line-height: 1.8; animation: fadeIn 0.3s ease;
+  max-width: 88%; word-break: break-word;
+}
+.follow-up-msg.user {
+  background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.08));
+  color: var(--gold-light);
+  align-self: flex-end;
+  border: 1px solid rgba(201,169,110,0.2);
+  border-bottom-right-radius: 4px;
+}
+.follow-up-msg.user .msg-label {
+  font-size: 0.7rem; color: var(--gold-dark); margin-bottom: 4px;
+  display: block; opacity: 0.7;
+}
+.follow-up-msg.ai {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  align-self: flex-start;
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 4px;
+}
+.follow-up-msg.ai .msg-label {
+  font-size: 0.7rem; color: var(--gold-dark); margin-bottom: 4px;
+  display: block; opacity: 0.7;
+}
+.follow-up-msg.ai .advice-inline {
+  display: block; margin-top: 10px; padding: 10px 14px;
+  background: rgba(201,169,110,0.06);
+  border-left: 3px solid var(--gold-dark);
+  border-radius: 0 8px 8px 0;
+  color: var(--gold-light); font-size: 0.85rem;
+  line-height: 1.7;
+}
+.follow-up-msg.ai .advice-inline::before { content: "💡 "; }
+.follow-up-input-row {
+  display: flex; gap: 10px; align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+.follow-up-input {
+  flex: 1; padding: 14px 18px; font-size: 0.9rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 24px; color: var(--text-primary); outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.follow-up-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
+}
+.follow-up-input::placeholder { color: var(--text-weak); }
+.follow-up-btn {
+  padding: 14px 24px; font-size: 0.9rem; color: #fff;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+  border: none; border-radius: 24px; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 12px rgba(196,92,74,0.3);
+  white-space: nowrap; font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.follow-up-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(196,92,74,0.4); }
+.follow-up-btn:active { transform: translateY(0); }
+
+/* 空状态提示 */
+.follow-up-empty {
+  text-align: center; padding: 20px 10px;
+  color: var(--text-weak); font-size: 0.85rem;
+  line-height: 1.6;
+}
+.follow-up-empty .empty-icon {
+  font-size: 2rem; margin-bottom: 8px; display: block; opacity: 0.5;
+}
+.follow-up-empty .empty-hints {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px; margin-top: 12px;
+}
+.follow-up-empty .empty-hint-tag {
+  padding: 4px 12px; font-size: 0.75rem;
+  background: rgba(201,169,110,0.06);
+  border: 1px solid rgba(201,169,110,0.15);
+  border-radius: 12px; color: var(--text-weak);
+  cursor: pointer; transition: all 0.2s;
+}
+.follow-up-empty .empty-hint-tag:hover {
+  background: rgba(201,169,110,0.12);
+  color: var(--gold);
+  border-color: rgba(201,169,110,0.3);
+}
+
+/* 思考中状态 */
+.thinking-msg {
+  align-self: flex-start;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 4px;
+  padding: 14px 18px; border-radius: 16px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeIn 0.3s ease;
+  max-width: 88%;
+}
+.thinking-msg .thinking-dots {
+  display: flex; gap: 4px;
+}
+.thinking-msg .thinking-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); opacity: 0.4;
+  animation: thinkingDot 1.4s infinite ease-in-out both;
+}
+.thinking-msg .thinking-dots span:nth-child(1) { animation-delay: 0s; }
+.thinking-msg .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-msg .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+.thinking-msg .thinking-text {
+  font-size: 0.85rem; color: var(--text-weak);
+}
+.thinking-msg .thinking-detail {
+  font-size: 0.75rem; color: var(--text-weak);
+  margin-top: 4px;
+}
+@keyframes thinkingDot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 0.8; }
+}
+.jiedu-card {
+  background: rgba(255,255,255,0.03); border-radius: 10px; padding: 18px;
+  border: 1px solid var(--border-color); transition: transform 0.2s, border-color 0.3s, background 0.3s;
+  backdrop-filter: blur(8px);
+}
+.jiedu-card:hover { transform: translateY(-2px); border-color: var(--border-color-strong); background: rgba(255,255,255,0.05); }
+.jiedu-card .card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.jiedu-card .icon { font-size: 1.5rem; }
+.jiedu-card .title { font-family: var(--font-serif); font-size: 1rem; color: var(--gold); font-weight: bold; }
+.jiedu-card .analysis {
+  font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8;
+  margin-bottom: 10px; padding-left: 10px;
+  border-left: 2px solid var(--border-color);
+}
+.jiedu-card .advice {
+  font-size: 0.85rem; color: var(--gold-light); line-height: 1.7;
+  padding: 10px 12px; background: rgba(201,169,110,0.06);
+  border-radius: 6px;
+}
+.jiedu-card .advice::before { content: "💡 "; font-weight: bold; color: var(--gold); }
+
+/* 底部操作 */
+.action-bar {
+  display: flex; gap: 15px; justify-content: center; margin-top: 30px; padding: 20px;
+}
+
+/* 分享下拉菜单 */
+.share-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.share-menu {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20,20,28,0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px 0;
+  min-width: 160px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+  z-index: 100;
+  margin-bottom: 8px;
+  backdrop-filter: blur(12px);
+}
+.share-menu.show {
+  display: block;
+}
+.share-menu::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(20,20,28,0.95);
+}
+.share-option {
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.share-option:hover {
+  background: rgba(201,169,110,0.1);
+  color: var(--gold);
+}
+.action-btn {
+  padding: 12px 30px; font-size: 1rem; border: none; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.action-btn.primary {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+  color: #fff; box-shadow: 0 4px 15px rgba(196,92,74,0.35);
+}
+.action-btn.secondary {
+  background: rgba(255,255,255,0.04); color: var(--gold);
+  border: 1px solid var(--border-color);
+}
+.action-btn.secondary:hover {
+  border-color: var(--border-color-strong);
+  background: rgba(255,255,255,0.06);
+}
+.action-btn:hover { transform: translateY(-2px); }
+
+/* ===== 页面过渡动画 ===== */
+.fade-out { animation: fadeOut 0.5s forwards; }
+.fade-in { animation: fadeIn 0.5s forwards; }
+.slide-up { animation: slideUp 0.5s forwards; }
+.slide-down { animation: slideDown 0.5s forwards; }
+
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
+@keyframes slideDown { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .title { font-size: 2rem; }
+  .result-main { flex-direction: column; }
+  .gua-visual { flex: 1; width: 100%; }
+  .jiedu-grid { grid-template-columns: 1fr; }
+  .najia-table { font-size: 0.8rem; }
+  .najia-table th, .najia-table td { padding: 6px; }
+}
+
+/* ===== 截图预览 ===== */
+.screenshot-modal {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;
+}
+.screenshot-modal.show { display: flex; }
+.screenshot-content {
+  background: var(--bg-secondary); padding: 20px; border-radius: 12px;
+  max-width: 90%; max-height: 90%; overflow: auto;
+}
+.screenshot-content img { max-width: 100%; border-radius: 8px; }
+.screenshot-actions {
+  display: flex; gap: 10px; justify-content: center; margin-top: 15px;
+}
+
+/* 起卦须知 */
+.qigua-notice {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+  color: var(--gold);
+  font-size: 15px;
+}
+.notice-header:hover { background: rgba(201,169,110,0.06); }
+.notice-icon { font-size: 16px; }
+.notice-title { font-weight: 600; }
+.notice-arrow {
+  margin-left: auto;
+  font-size: 12px;
+  transition: transform 0.3s;
+  color: var(--gold-dark);
+}
+.notice-arrow.open { transform: rotate(180deg); }
+.notice-body {
+  display: none;
+  padding: 0 16px 16px;
+  animation: fadeIn 0.3s ease;
+}
+.notice-body.show { display: block; }
+.notice-section { margin-bottom: 14px; }
+.notice-section:last-child { margin-bottom: 0; }
+.notice-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+.notice-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.notice-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 3px 0 3px 14px;
+  position: relative;
+}
+.notice-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--gold-dark);
+}
+.notice-list li strong {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 720px) {
+  .page-back-btn {
+    top: 10px;
+    left: 10px;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .home-page {
+    justify-content: flex-start;
+    padding: 76px 14px 28px;
+  }
+  .title {
+    font-size: 2rem;
+    line-height: 1.25;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .input-section,
+  .qigua-notice,
+  .manual-page,
+  .result-page {
+    width: 100%;
+    max-width: 100%;
+  }
+  .btn-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .manual-page,
+  .result-page {
+    padding: 66px 12px 28px;
+  }
+  .manual-title,
+  .result-title {
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+  .time-inputs,
+  .result-layout,
+  .gua-detail-grid,
+  .analysis-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .coin-guide-table,
+  .result-table,
+  .gua-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .coin-guide-row,
+  .result-row,
+  .gua-row {
+    min-width: 560px;
+  }
+  .gua-visual,
+  .gua-info {
+    border-radius: 10px;
+  }
+  .result-main {
+    gap: 16px;
+  }
+  .action-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .action-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 375px) {
+  .title {
+    font-size: 1.6rem;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+  }
+  .manual-title,
+  .toss-title {
+    font-size: 1.2rem;
+  }
+  .yao-opt {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  .manual-yao-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .coins-container {
+    gap: 20px;
+  }
+  .coin {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
 }
 </style>
 </head>
@@ -278,45 +1238,67 @@ td{color:var(--text2)}td.gold{color:var(--gold)}td.ji{color:var(--green)}td.xion
   <h2 class="manual-title">手动排卦</h2>
   <p class="manual-subtitle">参考下方铜钱起卦法，为每一爻选择阴阳属性</p>
   <!-- 三枚铜钱起卦法 -->
-  <div class="card card-top">
-    <div class="card-title">🪙 三枚铜钱起卦法（乾隆通宝）</div>
-    <div class="card-content">
-      <div class="coin-demo">
-        <div class="coin-demo-item">
+  <div class="coin-guide coin-guide-top">
+    <div class="coin-guide-title">🪙 三枚铜钱起卦法（乾隆通宝）</div>
+    <div class="coin-guide-content">
+      <div class="coin-face-demo">
+        <div class="coin-face-item">
           <img src="images/coin_back.jpg" alt="满文面" class="coin-img">
-          <div class="coin-face-label">满文面 = 阳</div>
+          <span class="coin-face-arrow">→</span>
+          <span class="coin-face-tag tag-yang">阳</span>
         </div>
-        <div class="coin-demo-item">
+        <div class="coin-face-item">
           <img src="images/coin_front.jpg" alt="汉字面" class="coin-img">
-          <div class="coin-face-label">汉字面 = 阴</div>
+          <span class="coin-face-arrow">→</span>
+          <span class="coin-face-tag tag-yin">阴</span>
         </div>
       </div>
-      <div class="coin-table">
-        <div class="coin-row header">
-          <span>三钱组合</span><span>结果</span><span>爻象</span>
+      <div class="coin-guide-table">
+        <div class="coin-guide-row header">
+          <span>三钱组合</span><span>满文面</span><span>汉字面</span><span>对应爻象</span>
         </div>
-        <div class="coin-row">
-          <span class="coin-visual">阳阳阳</span><span>三满文</span><span class="tag-old">老阳 ▬▬○</span>
+        <div class="coin-guide-row">
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满">
+          </span>
+          <span class="tag-yang">3个</span>
+          <span>0个</span>
+          <span class="tag-old">老阳 ▬▬○</span>
         </div>
-        <div class="coin-row">
-          <span class="coin-visual">阳阳阴</span><span>两满一汉</span><span class="tag-yang">少阳 ▬▬</span>
+        <div class="coin-guide-row">
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span class="tag-yang">2个</span>
+          <span class="tag-yin">1个</span>
+          <span class="tag-yang">少阳 ▬▬</span>
         </div>
-        <div class="coin-row">
-          <span class="coin-visual">阳阴阴</span><span>一满两汉</span><span class="tag-yin">少阴 ▬ ▬</span>
+        <div class="coin-guide-row">
+          <span class="coin-visual">
+            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span class="tag-yang">1个</span>
+          <span class="tag-yin">2个</span>
+          <span class="tag-yin">少阴 ▬ ▬</span>
         </div>
-        <div class="coin-row">
-          <span class="coin-visual">阴阴阴</span><span>三汉字</span><span class="tag-old">老阴 ▬ ▬×</span>
+        <div class="coin-guide-row">
+          <span class="coin-visual">
+            <img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
+          </span>
+          <span>0个</span>
+          <span class="tag-yin">3个</span>
+          <span class="tag-old">老阴 ▬ ▬×</span>
         </div>
       </div>
-      <p class="card-note">📌 满文面为阳、汉字面为阴。三正=老阳(变)、两正一背=少阳、一正两背=少阴、三背=老阴(变)。从初爻到上爻共投六次。</p>
+      <p class="coin-guide-note">📌 满文面为阳、汉字面为阴。三正=老阳(变)、两正一背=少阳、一正两背=少阴、三背=老阴(变)。从初爻到上爻共投六次。</p>
     </div>
   </div>
 
 
   <!-- 起卦时间 -->
-  <div class="card">
-    <div class="card-hd">📅 起卦时间</div>
-    <div class="time-bar">
+  <div class="time-section">
+    <div class="time-title">📅 起卦时间</div>
+    <div class="time-inputs">
       <div class="time-field">
         <label>年</label>
         <input type="number" id="timeYear" min="1900" max="2100" placeholder="2026">
@@ -350,8 +1332,8 @@ td{color:var(--text2)}td.gold{color:var(--gold)}td.ji{color:var(--green)}td.xion
     <div class="time-note">不填则默认使用当前时间</div>
   </div>
 
-  <div class="yao-list" id="manualYaoList"></div>
-  <div class="manual-acts">
+  <div class="manual-yao-list" id="manualYaoList"></div>
+  <div class="manual-actions">
     <button class="start-btn back-btn" onclick="goBackHome()">返回</button>
     <button class="start-btn" onclick="submitManualYao()">确认排盘</button>
   </div>
@@ -2985,14 +3967,14 @@ function buildManualYaoList() {
 
   for (let i = 0; i < 6; i++) {
     const row = document.createElement('div');
-    row.className = 'yao-row';
+    row.className = 'manual-yao-row';
 
     const label = document.createElement('span');
     label.className = 'yao-label';
     label.textContent = yaoNames[i];
 
     const optGroup = document.createElement('div');
-    optGroup.className = 'yao-opts';
+    optGroup.className = 'yao-options';
     options.forEach(opt => {
       const btn = document.createElement('span');
       btn.className = 'yao-opt';
@@ -3021,7 +4003,7 @@ function selectYaoOption(yaoIndex, value, type) {
   manualYaoSelection[yaoIndex] = value;
 
   // 更新按钮样式
-  const row = document.querySelectorAll('.yao-row')[yaoIndex];
+  const row = document.querySelectorAll('.manual-yao-row')[yaoIndex];
   const btns = row.querySelectorAll('.yao-opt');
   btns.forEach(btn => {
     btn.classList.remove('active-yang', 'active-yin', 'active-old');
@@ -3044,14 +4026,14 @@ function submitManualYao() {
   // 检查是否全部选择
   for (let i = 0; i < 6; i++) {
     if (manualYaoSelection[i] === 0 && i > 0) {
-      const row = document.querySelectorAll('.yao-row')[i];
+      const row = document.querySelectorAll('.manual-yao-row')[i];
       const hasActive = row.querySelector('.yao-opt.active-yang, .yao-opt.active-yin, .yao-opt.active-old');
       if (!hasActive) {
         alert(`请为${["初爻","二爻","三爻","四爻","五爻","上爻"][i]}选择阴阳属性`);
         return;
       }
     } else if (i === 0) {
-      const row = document.querySelectorAll('.yao-row')[0];
+      const row = document.querySelectorAll('.manual-yao-row')[0];
       const hasActive = row.querySelector('.yao-opt.active-yang, .yao-opt.active-yin, .yao-opt.active-old');
       if (!hasActive) {
         alert('请为初爻选择阴阳属性');
@@ -3864,4 +4846,3 @@ checkShareParam();
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
