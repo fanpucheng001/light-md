@@ -307,11 +307,11 @@ body.embedded-in-shell .page-back-btn {
 .coin-guide-table {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 .coin-guide-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 1fr 80px 80px;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
@@ -354,19 +354,22 @@ body.embedded-in-shell .page-back-btn {
   margin-bottom: 0; line-height: 1.6;
 }
 .coin-face-demo {
-  display: flex; gap: 20px; justify-content: center; margin-bottom: 15px;
+  display: flex; gap: 24px; justify-content: center; margin-bottom: 15px;
   padding-bottom: 15px; border-bottom: 1px solid var(--border-color);
+  align-items: center;
 }
 .coin-face-item {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.coin-face-label {
+  font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.3;
 }
 .coin-face {
-  width: 60px; height: 60px; border-radius: 50%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  font-size: 0.7rem; font-weight: bold; line-height: 1.3;
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: bold;
   border: 2px solid; box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 15px rgba(201,169,110,0.1);
 }
-.coin-face small { font-size: 0.6rem; font-weight: normal; opacity: 0.7; }
 .coin-face.yang-face {
   background: linear-gradient(135deg, #c9a96e 0%, #8a7a5a 100%);
   color: #0a0a0f; border-color: var(--gold);
@@ -422,28 +425,16 @@ body.embedded-in-shell .page-back-btn {
   .coin-guide-table { gap: 1px; }
   .coin-guide-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 4px;
-    padding: 3px 6px;
+    padding: 4px 8px;
     border-radius: 4px;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
   .coin-guide-row.header { display: none; }
-  .coin-guide-row .coin-visual {
-    order: 0;
-    display: flex;
-    align-items: center;
-    gap: 1px;
-  }
-  .coin-guide-row span:nth-child(2) { display: none; }
   .coin-guide-row span:nth-child(3) { display: none; }
-  .coin-guide-row span:nth-child(4) {
-    order: 1;
-    text-align: right;
-    font-size: 0.65rem;
-  }
-  .coin-icon-img { width: 14px; height: 14px; margin: 0 1px; }
+  .coin-guide-row .coin-visual { text-align: left; }
   .coin-guide-note { display: none; }
   .coin-guide-content p { display: none; }
 
@@ -455,27 +446,33 @@ body.embedded-in-shell .page-back-btn {
   .time-field input, .time-field select { padding: 3px 2px; font-size: 0.7rem; border-radius: 4px; }
   .time-note { display: none; }
 
-  /* 爻位选择 - 极紧凑横向 */
-  .manual-yao-list { gap: 2px; margin-bottom: 6px; }
+  /* 爻位选择 - 手机竖排 */
+  .manual-yao-list { gap: 6px; margin-bottom: 12px; }
   .manual-yao-row {
     display: grid;
-    grid-template-columns: 32px 1fr 36px;
-    align-items: center;
+    grid-template-columns: 1fr;
     gap: 4px;
-    padding: 3px 6px;
-    border-radius: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;
   }
-  .yao-label { text-align: right; font-size: 0.68rem; }
-  .yao-options { gap: 2px; }
-  .yao-opt { padding: 2px 6px; font-size: 0.6rem; border-radius: 3px; }
-  .yao-preview { width: 32px; height: 3px; justify-self: center; border-radius: 2px; }
+  .yao-label { text-align: center; font-size: 0.78rem; margin-bottom: 2px; }
+  .yao-options { gap: 4px; display: flex; flex-wrap: wrap; justify-content: center; }
+  .yao-opt { padding: 4px 8px; font-size: 0.72rem; border-radius: 5px; }
+  .yao-preview { width: 100%; height: 4px; justify-self: center; border-radius: 2px; margin-top: 2px; }
 
   /* 操作按钮 */
   .manual-actions { flex-direction: row; gap: 6px; margin-top: 4px; }
   .manual-actions .start-btn { padding: 8px 6px; font-size: 0.78rem; border-radius: 6px; }
 
   /* 提示文字 */
-  .manual-hint { font-size: 0.6rem; line-height: 1.3; margin-top: 4px; }
+  .manual-hint { font-size: 0.7rem; line-height: 1.4; margin-top: 6px; }
+  .coin-face-demo { gap: 16px; }
+  .coin-face { width: 44px; height: 44px; font-size: 0.9rem; }
+  .coin-face-label { font-size: 0.65rem; }
+  .coin-guide-row { grid-template-columns: 1fr 1fr; font-size: 0.72rem; padding: 5px 8px; }
+  .coin-guide-row.header { display: none; }
+  .coin-guide-row span:nth-child(3) { display: none; }
+  .coin-guide-row .coin-visual { text-align: left; }
 }
 
 
@@ -1243,51 +1240,30 @@ body.embedded-in-shell .page-back-btn {
     <div class="coin-guide-content">
       <div class="coin-face-demo">
         <div class="coin-face-item">
-          <img src="images/coin_back.jpg" alt="满文面" class="coin-img">
-          <span class="coin-face-arrow">→</span>
-          <span class="coin-face-tag tag-yang">阳</span>
+          <div class="coin-face yang-face">阳</div>
+          <div class="coin-face-label">满文面（背面）</div>
         </div>
+        <div class="coin-face-arrow">↔</div>
         <div class="coin-face-item">
-          <img src="images/coin_front.jpg" alt="汉字面" class="coin-img">
-          <span class="coin-face-arrow">→</span>
-          <span class="coin-face-tag tag-yin">阴</span>
+          <div class="coin-face yin-face">阴</div>
+          <div class="coin-face-label">汉字面（正面）</div>
         </div>
       </div>
       <div class="coin-guide-table">
         <div class="coin-guide-row header">
-          <span>三钱组合</span><span>满文面</span><span>汉字面</span><span>对应爻象</span>
+          <span>三钱组合</span><span>结果</span><span>爻象</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">
-            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满">
-          </span>
-          <span class="tag-yang">3个</span>
-          <span>0个</span>
-          <span class="tag-old">老阳 ▬▬○</span>
+          <span class="coin-visual">三满文</span><span>3阳 0阴</span><span class="tag-old">老阳 ▬▬○</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">
-            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
-          </span>
-          <span class="tag-yang">2个</span>
-          <span class="tag-yin">1个</span>
-          <span class="tag-yang">少阳 ▬▬</span>
+          <span class="coin-visual">两满一汉</span><span>2阳 1阴</span><span class="tag-yang">少阳 ▬▬</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">
-            <img src="images/coin_back.jpg" class="coin-icon-img" alt="满"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
-          </span>
-          <span class="tag-yang">1个</span>
-          <span class="tag-yin">2个</span>
-          <span class="tag-yin">少阴 ▬ ▬</span>
+          <span class="coin-visual">一满两汉</span><span>1阳 2阴</span><span class="tag-yin">少阴 ▬ ▬</span>
         </div>
         <div class="coin-guide-row">
-          <span class="coin-visual">
-            <img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉"><img src="images/coin_front.jpg" class="coin-icon-img" alt="汉">
-          </span>
-          <span>0个</span>
-          <span class="tag-yin">3个</span>
-          <span class="tag-old">老阴 ▬ ▬×</span>
+          <span class="coin-visual">三汉字</span><span>0阳 3阴</span><span class="tag-old">老阴 ▬ ▬×</span>
         </div>
       </div>
       <p class="coin-guide-note">📌 满文面为阳、汉字面为阴。三正=老阳(变)、两正一背=少阳、一正两背=少阴、三背=老阴(变)。从初爻到上爻共投六次。</p>
@@ -4846,3 +4822,4 @@ checkShareParam();
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
