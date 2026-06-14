@@ -413,66 +413,61 @@ body.embedded-in-shell .page-back-btn {
 
 /* ===== 手动排卦页移动端适配 (max-width: 480px) ===== */
 @media (max-width: 480px) {
-  .manual-page { padding: 10px 6px; min-height: 100dvh; }
-  .manual-title { font-size: 1.1rem; margin-bottom: 2px; letter-spacing: 0.05em; }
-  .manual-subtitle { font-size: 0.65rem; margin-bottom: 6px; }
+  .manual-page { padding: 16px 10px; min-height: 100dvh; }
+  .manual-title { font-size: 1.2rem; margin-bottom: 6px; letter-spacing: 0.08em; }
+  .manual-subtitle { font-size: 0.78rem; margin-bottom: 14px; }
 
-  /* 铜钱起卦法 - 横向紧凑卡片 */
-  .coin-guide-top { margin-bottom: 4px; }
-  .coin-guide { padding: 6px 8px; margin-top: 0; margin-bottom: 4px; border-radius: 8px; }
-  .coin-guide-title { font-size: 0.7rem; margin-bottom: 3px; }
-  .coin-face-demo { display: none; }
-  .coin-guide-table { gap: 1px; }
+  /* 铜钱起卦法 - 卡片 */
+  .coin-guide-top { margin-bottom: 12px; }
+  .coin-guide { padding: 14px 12px; margin-top: 0; margin-bottom: 12px; border-radius: 12px; }
+  .coin-guide-title { font-size: 0.88rem; margin-bottom: 8px; }
+  .coin-face-demo { display: flex; gap: 20px; margin-bottom: 12px; padding-bottom: 12px; }
+  .coin-face-demo .coin-img { width: 42px; height: 42px; }
+  .coin-face-label { font-size: 0.72rem; }
+  .coin-guide-table { gap: 4px; }
   .coin-guide-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
   }
   .coin-guide-row.header { display: none; }
   .coin-guide-row span:nth-child(3) { display: none; }
   .coin-guide-row .coin-visual { text-align: left; }
-  .coin-guide-note { display: none; }
+  .coin-guide-note { display: block; font-size: 0.72rem; margin-top: 10px; }
   .coin-guide-content p { display: none; }
 
-  /* 时间输入 - 一行紧凑 */
-  .time-section { padding: 5px 8px; margin-bottom: 4px; border-radius: 8px; }
-  .time-title { display: none; }
-  .time-inputs { grid-template-columns: repeat(4, 1fr); gap: 4px; }
-  .time-field label { font-size: 0.6rem; margin-bottom: 1px; }
-  .time-field input, .time-field select { padding: 3px 2px; font-size: 0.7rem; border-radius: 4px; }
-  .time-note { display: none; }
+  /* 时间输入 */
+  .time-section { padding: 12px; margin-bottom: 12px; border-radius: 10px; }
+  .time-title { display: block; font-size: 0.85rem; margin-bottom: 10px; }
+  .time-inputs { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .time-field label { font-size: 0.65rem; margin-bottom: 2px; }
+  .time-field input, .time-field select { padding: 6px 4px; font-size: 0.78rem; border-radius: 6px; }
+  .time-note { display: block; font-size: 0.68rem; margin-top: 6px; }
 
   /* 爻位选择 - 手机竖排 */
-  .manual-yao-list { gap: 6px; margin-bottom: 12px; }
+  .manual-yao-list { gap: 10px; margin-bottom: 16px; }
   .manual-yao-row {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 6px 8px;
-    border-radius: 8px;
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 10px;
   }
-  .yao-label { text-align: center; font-size: 0.78rem; margin-bottom: 2px; }
-  .yao-options { gap: 4px; display: flex; flex-wrap: wrap; justify-content: center; }
-  .yao-opt { padding: 4px 8px; font-size: 0.72rem; border-radius: 5px; }
-  .yao-preview { width: 100%; height: 4px; justify-self: center; border-radius: 2px; margin-top: 2px; }
+  .yao-label { text-align: center; font-size: 0.85rem; margin-bottom: 4px; }
+  .yao-options { gap: 6px; display: flex; flex-wrap: wrap; justify-content: center; }
+  .yao-opt { padding: 6px 10px; font-size: 0.78rem; border-radius: 6px; }
+  .yao-preview { width: 100%; height: 5px; justify-self: center; border-radius: 3px; margin-top: 4px; }
 
   /* 操作按钮 */
-  .manual-actions { flex-direction: row; gap: 6px; margin-top: 4px; }
-  .manual-actions .start-btn { padding: 8px 6px; font-size: 0.78rem; border-radius: 6px; }
+  .manual-actions { flex-direction: row; gap: 8px; margin-top: 8px; }
+  .manual-actions .start-btn { padding: 10px 8px; font-size: 0.85rem; border-radius: 8px; }
 
   /* 提示文字 */
-  .manual-hint { font-size: 0.7rem; line-height: 1.4; margin-top: 6px; }
-  .coin-face-demo { gap: 16px; }
-  .coin-face { width: 44px; height: 44px; font-size: 0.9rem; }
-  .coin-face-label { font-size: 0.65rem; }
-  .coin-guide-row { grid-template-columns: 1fr 1fr; font-size: 0.72rem; padding: 5px 8px; }
-  .coin-guide-row.header { display: none; }
-  .coin-guide-row span:nth-child(3) { display: none; }
-  .coin-guide-row .coin-visual { text-align: left; }
+  .manual-hint { font-size: 0.75rem; line-height: 1.5; margin-top: 10px; }
 }
 
 
@@ -4821,4 +4816,4 @@ checkShareParam();
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
